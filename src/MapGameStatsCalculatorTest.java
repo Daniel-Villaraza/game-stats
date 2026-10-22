@@ -35,7 +35,7 @@ public class MapGameStatsCalculatorTest {
   @Test
   public void gameCountReturnsNumberOfGamesForOnePerson() {
     // Arrange
-    String scoreData = "Daniel 10\n" + "Daniel 30\n" + "Daniel 25\n";
+    String scoreData = "Daniel 10\n" + "Daniel 20\n" + "Daniel 30\n";
     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
     
     // Actual
@@ -105,6 +105,19 @@ public class MapGameStatsCalculatorTest {
 
     // Assert
     assertEquals(40, actual);
+  }
+
+  @Test
+  public void highScoreReturnsHighestScoreForOnePerson() {
+    // Arrange
+    String scoreData = "Daniel 10\n" + "Daniel 30\n" + "Daniel 20\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.highScore("Daniel");
+
+    // Assert
+    assertEquals(30, actual);
   }
 
   @Test
