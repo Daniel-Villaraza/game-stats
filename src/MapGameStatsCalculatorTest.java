@@ -33,6 +33,19 @@ public class MapGameStatsCalculatorTest {
   }
 
   @Test
+  public void gameCountReturnsNumberOfGamesForOnePerson() {
+    // Arrange
+    String scoreData = "Daniel 10\n" + "Daniel 30\n" + "Daniel 25\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+    
+    // Actual
+    int actual = calculator.gameCount("Daniel");
+
+    // Assert
+    assertEquals(3, actual);
+  }
+
+  @Test
   public void gameCountThrowsNullPointerExceptionForNullPerson() {
     // Arrange
     String scoreData = "Nupur 10\n"
