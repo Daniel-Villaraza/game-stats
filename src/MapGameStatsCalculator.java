@@ -24,6 +24,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   private Map<String, Integer> highScores;
   private int highestScore = 0;
   private String playerWithHighestScore = "";
+  Map<Character, Integer> alphabetChars = new HashMap<>();
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
@@ -50,6 +51,33 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
       if (highestScore < score) {
         highestScore = score;
         playerWithHighestScore = name;
+      } else if (highestScore == score) {
+        char[] player1 = playerWithHighestScore.toLowerCase().toCharArray();
+        char[] player2 = name.toLowerCase().toCharArray();
+
+        int minimumLength = 0;
+
+        if (player1.length > player2.length) {
+          minimumLength = player2.length;
+        } else if (player1.length < player2.length) {
+          minimumLength = player1.length;
+        } else {
+          minimumLength = player1.length;
+        }
+        
+        assignAlphabetMap();
+
+        for (int i = 0; i < minimumLength; i++) {
+          if (player1[i] != player2[i]) {
+            if (alphabetChars.get(player1[i]) > alphabetChars.get(player2[i])) {
+              highestScore = score;
+              playerWithHighestScore = name;
+              break;
+            }
+          } else {
+            continue;
+          }
+        }
       }
     }
   }
@@ -107,11 +135,9 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public double getAverageScore(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'getAverageScore'");
+    checkPerson(person);
+    return 0.0;
 
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
   }
 
   /**
@@ -174,5 +200,34 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     if(gameCounts.isEmpty()) {
       throw new NoSuchElementException("No score data parsed");
     }
+  }
+
+  private void assignAlphabetMap() {
+    alphabetChars.put('a', 0);
+    alphabetChars.put('b', 1);
+    alphabetChars.put('c', 2);
+    alphabetChars.put('d', 3);
+    alphabetChars.put('e', 4);
+    alphabetChars.put('f', 5);
+    alphabetChars.put('g', 6);
+    alphabetChars.put('h', 7);
+    alphabetChars.put('i', 8);
+    alphabetChars.put('j', 9);
+    alphabetChars.put('k', 10);
+    alphabetChars.put('l', 11);
+    alphabetChars.put('m', 12);
+    alphabetChars.put('n', 13);
+    alphabetChars.put('o', 14);
+    alphabetChars.put('p', 15);
+    alphabetChars.put('q', 16);
+    alphabetChars.put('r', 17);
+    alphabetChars.put('s', 18);
+    alphabetChars.put('y', 19);
+    alphabetChars.put('u', 20);
+    alphabetChars.put('v', 21);
+    alphabetChars.put('w', 22);
+    alphabetChars.put('x', 23);
+    alphabetChars.put('y', 24);
+    alphabetChars.put('z', 25);
   }
 }

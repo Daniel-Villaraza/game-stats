@@ -196,6 +196,19 @@ public class MapGameStatsCalculatorTest {
   }
 
   @Test
+  public void highestScorerReturnsPersonWithHighestScoreLexicographically() {
+    // Arrange
+    String scoreDate = "Daniel 30\n" + "Nupur 30\n" + "Baya 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreDate));
+
+    // Act
+    String actual = calculator.highestScorer();
+
+    // Assert
+    assertEquals("Baya", actual);
+  }
+
+  @Test
   public void highestScorerThrowsNoSuchElementExceptionForEmptyScoreData() {
     // Arrange
     String scoreData = "";
