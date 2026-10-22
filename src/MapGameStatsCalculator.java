@@ -22,6 +22,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 
   // For some waves you will need to add more private instance variables here!
   private Map<String, Integer> highScores;
+  private int highestScore = 0;
+  private String playerWithHighestScore = "";
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
@@ -43,6 +45,11 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
         if (score > highScores.get(name)) {
           highScores.put(name, score);
         }
+      }
+
+      if (highestScore < score) {
+        highestScore = score;
+        playerWithHighestScore = name;
       }
     }
   }
@@ -81,14 +88,14 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    * 
    * @return the name of the person with the highest score
    * @throws NoSuchElementException if there is no score data
+   * 
+   * NOTE: Got stuck on how to implement this method based on Wave 3 instructions; 
+   * modified and created new instance variables to implement this method
    */
   @Override
   public String highestScorer() {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestScorer'");
-
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
+    checkScoreData();
+    return playerWithHighestScore;
   }
 
   /**
