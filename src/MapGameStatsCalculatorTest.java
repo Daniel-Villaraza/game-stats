@@ -33,7 +33,7 @@ public class MapGameStatsCalculatorTest {
   }
 
   @Test
-  public void gameCountReturnsNumberOfGamesForOnePerson() {
+  public void gameCountReturnsNumberOfGamesForOnePlayer() {
     // Arrange
     String scoreData = "Daniel 10\n" + "Daniel 20\n" + "Daniel 30\n";
     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
@@ -108,7 +108,7 @@ public class MapGameStatsCalculatorTest {
   }
 
   @Test
-  public void highScoreReturnsHighestScoreForOnePerson() {
+  public void highScoreReturnsHighestScoreForOnePlayer() {
     // Arrange
     String scoreData = "Daniel 10\n" + "Daniel 30\n" + "Daniel 20\n";
     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
@@ -180,6 +180,19 @@ public class MapGameStatsCalculatorTest {
 
     // Assert
     assertEquals("Baya", actual);
+  }
+
+  @Test
+  public void highestScorerReturnsPersonWithHighestScoreForOnePlayer() {
+    // Arrange
+    String scoreData = "Daniel 10\n" + "Daniel 15\n" + "Daniel 25\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    String actual = calculator.highestScorer();
+
+    // Assert
+    assertEquals("Daniel", actual);
   }
 
   @Test
