@@ -58,7 +58,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
         highestScore = score;
         playerWithHighestScore = name;
       } else if (highestScore == score) {
-        alphabetizePlayerWithSameScores(name, score);
+        alphabetizePlayersWithSameScores(name, score);
       }
       
       // related to Wave 4
@@ -211,7 +211,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     }
   }
 
-  private void alphabetizePlayerWithSameScores(String name, int score) {
+  private void alphabetizePlayersWithSameScores(String name, int score) {
     char[] player1 = playerWithHighestScore.toLowerCase().toCharArray();
     char[] player2 = name.toLowerCase().toCharArray();
 
