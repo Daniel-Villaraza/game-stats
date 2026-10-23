@@ -244,6 +244,19 @@ public class MapGameStatsCalculatorTest {
   }
 
   @Test
+  public void getAverageScoreReturnsAverageScoreForOnePerson() {
+    // Arrange
+    String scoreData = "Daniel 20\n" + "Daniel 20\n" + "Daniel 20\n" + "Daniel 20\n" + "Daniel 20\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    double actual = calculator.getAverageScore("Daniel");
+
+    // Assert
+    assertEquals(20.0, actual);
+  }
+
+  @Test
   public void getAverageScoreThrowsNullPointerExceptionForNullPerson() {
     // Arrange
     String scoreData = "Nupur 10\n"
