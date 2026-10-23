@@ -27,6 +27,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   private String playerWithHighestScore = "";
   private Map<Character, Integer> alphabetChars = new HashMap<>();
   private Map<String, List<Integer>> playerScoresFromAllGames = new HashMap<>();
+  private List<String> listOfPlayers = new ArrayList<>();
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
@@ -94,6 +95,11 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
         playerScoresFromAllGames.put(name, listOfScores);
       } else {
         playerScoresFromAllGames.get(name).add(score);
+      }
+
+      // related to Wave 5
+      if (!listOfPlayers.contains(name)) {
+        listOfPlayers.add(name);
       }
     }
   }
@@ -174,11 +180,16 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public String highestAverageScorer() {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
+    checkScoreData();
+    double playerWithHighestAverage = 0.0;
+    
+    for (int i = 0; i < listOfPlayers.size(); i++) {
+      if (playerWithHighestAverage < getAverageScore(listOfPlayers.get(i))) {
+        playerWithHighestAverage = getAverageScore(listOfPlayers.get(i));
+      }
+    }
 
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
+    return playerWithHighestScore;
   }
 
   /**
