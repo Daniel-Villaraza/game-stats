@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -180,11 +181,22 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    */
   @Override
   public List<Integer> sortedScores(String person) {
-    // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'sortedScores'");
+    checkPerson(person);
+    List<Integer> listOfScoresInteger = playerScoresFromAllGames.get(person);
+    List<Score> listOfScores = new ArrayList<>();
 
-    // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    for (int i = 0; i < listOfScoresInteger.size(); i++) {
+      listOfScores.add(new Score(listOfScoresInteger.get(i)));
+    }
+    
+    Collections.sort(listOfScores);
+    listOfScoresInteger.clear();
+    
+    for (int i = 0; i < listOfScores.size(); i++) {
+      listOfScoresInteger.add(listOfScores.get(i).getScoreValue());
+    }
+
+    return listOfScoresInteger;
   }
   
   /**
