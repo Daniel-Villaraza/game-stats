@@ -58,32 +58,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
         highestScore = score;
         playerWithHighestScore = name;
       } else if (highestScore == score) {
-        char[] player1 = playerWithHighestScore.toLowerCase().toCharArray();
-        char[] player2 = name.toLowerCase().toCharArray();
-
-        int minimumLength = 0;
-
-        if (player1.length > player2.length) {
-          minimumLength = player2.length;
-        } else if (player1.length < player2.length) {
-          minimumLength = player1.length;
-        } else {
-          minimumLength = player1.length;
-        }
-        
-        assignAlphabetMap();
-
-        for (int i = 0; i < minimumLength; i++) {
-          if (player1[i] != player2[i]) {
-            if (alphabetChars.get(player1[i]) > alphabetChars.get(player2[i])) {
-              highestScore = score;
-              playerWithHighestScore = name;
-              break;
-            }
-          } else {
-            continue;
-          }
-        }
+        alphabetizePlayerWithSameScores(name, score);
       }
       
       // related to Wave 4
@@ -233,6 +208,35 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   private void checkScoreData() {
     if(gameCounts.isEmpty()) {
       throw new NoSuchElementException("No score data parsed");
+    }
+  }
+
+  private void alphabetizePlayerWithSameScores(String name, int score) {
+    char[] player1 = playerWithHighestScore.toLowerCase().toCharArray();
+    char[] player2 = name.toLowerCase().toCharArray();
+
+    int minimumLength = 0;
+
+    if (player1.length > player2.length) {
+      minimumLength = player2.length;
+    } else if (player1.length < player2.length) {
+      minimumLength = player1.length;
+    } else {
+      minimumLength = player1.length;
+    }
+    
+    assignAlphabetMap();
+
+    for (int i = 0; i < minimumLength; i++) {
+      if (player1[i] != player2[i]) {
+        if (alphabetChars.get(player1[i]) > alphabetChars.get(player2[i])) {
+          highestScore = score;
+          playerWithHighestScore = name;
+          break;
+        }
+      } else {
+        continue;
+      }
     }
   }
 
