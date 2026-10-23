@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   private Map<String, Integer> highScores;
   private int highestScore = 0;
   private String playerWithHighestScore = "";
-  Map<Character, Integer> alphabetChars = new HashMap<>();
+  private Map<Character, Integer> alphabetChars = new HashMap<>();
+  private Map<String, List<Integer>> playerScoresFromAllGames = new HashMap<>();
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
@@ -34,12 +36,14 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
 
+      // related to Wave 1
       if (!gameCounts.containsKey(name)) {
         gameCounts.put(name, 1);
       } else {
         gameCounts.put(name, gameCounts.get(name) + 1);
       }
 
+      // related to Wave 2
       if (!highScores.containsKey(name)) {
         highScores.put(name, score);
       } else {
@@ -48,6 +52,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
         }
       }
 
+      // related to Wave 3
       if (highestScore < score) {
         highestScore = score;
         playerWithHighestScore = name;
@@ -78,6 +83,17 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
             continue;
           }
         }
+      }
+      
+      // related to Wave 4
+      List<Integer> listOfScores = new ArrayList<>();
+      
+      if (!playerScoresFromAllGames.containsKey(name)) {
+        listOfScores.clear();
+        listOfScores.add(score);
+        playerScoresFromAllGames.put(name, listOfScores);
+      } else {
+        playerScoresFromAllGames.get(name).add(score);
       }
     }
   }
@@ -136,8 +152,15 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public double getAverageScore(String person) {
     checkPerson(person);
-    return 0.0;
+    List<Integer> listOfScores = new ArrayList<>();
+    listOfScores = playerScoresFromAllGames.get(person);
+    int sumOfScores = 0;
 
+    for (int i = 0; i < listOfScores.size(); i++) {
+      sumOfScores += listOfScores.get(i);
+    }
+    
+    return 1.0 * sumOfScores / gameCount(person);
   }
 
   /**
