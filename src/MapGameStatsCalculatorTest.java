@@ -198,8 +198,8 @@ public class MapGameStatsCalculatorTest {
   @Test
   public void highestScorerReturnsPersonWithHighestScoreLexicographically() {
     // Arrange
-    String scoreDate = "Daniel 30\n" + "Nupur 30\n" + "Baya 30\n";
-    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreDate));
+    String scoreData = "Daniel 30\n" + "Nupur 30\n" + "Baya 30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
 
     // Act
     String actual = calculator.highestScorer();
@@ -244,7 +244,7 @@ public class MapGameStatsCalculatorTest {
   }
 
   @Test
-  public void getAverageScoreReturnsAverageScoreForOnePerson() {
+  public void getAverageScoreReturnsAverageScoreForOnePlayer() {
     // Arrange
     String scoreData = "Daniel 10\n" + "Daniel 30\n";
     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
@@ -369,6 +369,19 @@ public class MapGameStatsCalculatorTest {
 
     // Assert
     assertEquals(List.of(10, 20, 30, 40), actual);
+  }
+
+  @Test 
+  public void sortedScoresReturnsScoresInAscendingOrderForOnePlayer() {
+    // Arrange
+    String scoreData = "Daniel 10\n" + "Daniel 30\n" + "Daniel 25\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    List<Integer> actual = calculator.sortedScores("Daniel");
+
+    // Assert
+    assertEquals(List.of(10, 25, 30), actual);
   }
 
   @Test
