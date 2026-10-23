@@ -237,10 +237,12 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
           highestScore = score;
           playerWithHighestScore = name;
           break;
+        } else if (alphabetChars.get(player1[i]) == alphabetChars.get(player2[i])) {
+          continue;
+        } else {
+          break;
         }
-      } else {
-        continue;
-      }
+      } 
     }
   }
 
@@ -266,10 +268,12 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
           highestAverage = average;
           playerWithHighestAverage = name;
           break;
+        } else if (alphabetChars.get(player1[i]) == alphabetChars.get(player2[i])) {
+          continue;
+        } else {
+          break;
         }
-      } else {
-        continue;
-      }
+      } 
     }
   }
 
