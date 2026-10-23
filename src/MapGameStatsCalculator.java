@@ -24,7 +24,9 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   // For some waves you will need to add more private instance variables here!
   private Map<String, Integer> highScores;
   private int highestScore = 0;
+  private double highestAverage = 0.0;
   private String playerWithHighestScore = "";
+  private String playerWithHighestAverage = "";
   private Map<Character, Integer> alphabetChars = new HashMap<>();
   private Map<String, List<Integer>> playerScoresFromAllGames = new HashMap<>();
   private List<String> listOfPlayers = new ArrayList<>();
@@ -156,15 +158,17 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public String highestAverageScorer() {
     checkScoreData();
-    double playerWithHighestAverage = 0.0;
     
     for (int i = 0; i < listOfPlayers.size(); i++) {
-      if (playerWithHighestAverage < getAverageScore(listOfPlayers.get(i))) {
-        playerWithHighestAverage = getAverageScore(listOfPlayers.get(i));
+      if (highestAverage < getAverageScore(listOfPlayers.get(i))) {
+        playerWithHighestAverage = listOfPlayers.get(i);
+        highestAverage = getAverageScore(listOfPlayers.get(i));
+      } else if (highestAverage == getAverageScore(listOfPlayers.get(i))) {
+        alphabetizePlayersWithSameAverages(listOfPlayers.get(i), getAverageScore(listOfPlayers.get(i)));
       }
     }
 
-    return playerWithHighestScore;
+    return playerWithHighestAverage;
   }
 
   /**
@@ -232,6 +236,35 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
         if (alphabetChars.get(player1[i]) > alphabetChars.get(player2[i])) {
           highestScore = score;
           playerWithHighestScore = name;
+          break;
+        }
+      } else {
+        continue;
+      }
+    }
+  }
+
+  private void alphabetizePlayersWithSameAverages(String name, double average) {
+    char[] player1 = playerWithHighestAverage.toLowerCase().toCharArray();
+    char[] player2 = name.toLowerCase().toCharArray();
+
+    int minimumLength = 0;
+
+    if (player1.length > player2.length) {
+      minimumLength = player2.length;
+    } else if (player1.length < player2.length) {
+      minimumLength = player1.length;
+    } else {
+      minimumLength = player1.length;
+    }
+    
+    assignAlphabetMap();
+
+    for (int i = 0; i < minimumLength; i++) {
+      if (player1[i] != player2[i]) {
+        if (alphabetChars.get(player1[i]) > alphabetChars.get(player2[i])) {
+          highestAverage = average;
+          playerWithHighestAverage = name;
           break;
         }
       } else {
