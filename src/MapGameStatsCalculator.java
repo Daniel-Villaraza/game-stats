@@ -126,6 +126,30 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     return playerWithHighestScore;
   }
 
+  // NOTE: The commented code below is my partner's code for highestScorer(). We both discussed
+  // how we'd implement the method, but decided to implement the method our own way.
+  // public String highestScorer() {
+  //   checkScoreData();
+  //   String highestScorer = "";
+  //   int highestScore = -100000000;
+  //   boolean firstScore = false;
+  //   for (String name : highScores.keySet()) {
+  //       int score = highScores.get(name);
+  //       if (firstScore == false) {
+  //           highestScore = score;
+  //           highestScorer = name;
+  //           firstScore = true;
+  //       } else if(highestScore < score) {
+  //           highestScore = score;
+  //           highestScorer = name;
+  //       } else if (highestScore == score) {
+  //           if (name.compareTo(highestScorer) < 0) {
+  //           highestScorer = name;
+  //           }
+  //       }
+  //   } return highestScorer;
+  // }
+
   /**
    * Returns the average score a person has gotten.
    * 
