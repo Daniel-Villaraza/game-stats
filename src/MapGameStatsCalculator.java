@@ -31,10 +31,12 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   private Map<Character, Integer> alphabetChars = new HashMap<>();
   private Map<String, List<Integer>> playerScoresFromAllGames = new HashMap<>();
   private List<String> listOfPlayers = new ArrayList<>();
+  private Map<String, List<Integer>> scoreMap;
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
     highScores = new HashMap<>();
+    scoreMap = new HashMap<>();
     
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
@@ -78,6 +80,15 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
       // related to Wave 5
       if (!listOfPlayers.contains(name)) {
         listOfPlayers.add(name);
+      }
+          
+      // related to Wave 6
+      if (!scoreMap.containsKey(name)) {
+          List<Integer> scores = new ArrayList<>();
+          scores.add(score);
+          scoreMap.put(name, scores);
+      } else {
+          scoreMap.get(name).add(score);
       }
     }
   }
@@ -196,6 +207,32 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     return playerWithHighestAverage;
   }
 
+  // NOTE: The commented code below is my partner's code for highestAverageScorer(). We both discussed
+  // how we'd implement the method, but decided to implement the method our own way.
+  //  public String highestAverageScorer() {
+  //       checkScoreData();
+  //       String highestAverageScorer = "";
+  //       double avg = 0;
+  //       double highestAvg = 0;
+  //       boolean isFirst = false;
+  //       for(String name : scoreTotal.keySet()) {
+  //           avg = getAverageScore(name);
+  //           if (isFirst == false) {
+  //               highestAvg = getAverageScore(name);
+  //               highestAverageScorer = name;
+  //               isFirst = true;
+  //           } else if (highestAvg < avg){
+  //               highestAvg = avg;
+  //               highestAverageScorer = name;
+  //           } else if (highestAvg == avg) {
+  //               if (name.compareTo(highestAverageScorer) < 0) { 
+  //                   highestAverageScorer = name;
+  //               }
+  //           }
+  //       }
+  //       return highestAverageScorer;
+  //   }
+
   /**
    * Returns a list of the scores a person has gotten, sorted in ascending order (lowest to highest).
    * 
@@ -206,21 +243,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public List<Integer> sortedScores(String person) {
     checkPerson(person);
-    List<Integer> listOfScoresInteger = playerScoresFromAllGames.get(person);
-    List<Score> listOfScores = new ArrayList<>();
-
-    for (int i = 0; i < listOfScoresInteger.size(); i++) {
-      listOfScores.add(new Score(listOfScoresInteger.get(i)));
-    }
-    
-    Collections.sort(listOfScores);
-    listOfScoresInteger.clear();
-    
-    for (int i = 0; i < listOfScores.size(); i++) {
-      listOfScoresInteger.add(listOfScores.get(i).getScoreValue());
-    }
-
-    return listOfScoresInteger;
+    Collections.sort(scoreMap.get(person));
+    return scoreMap.get(person);
   }
   
   /**
